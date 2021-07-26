@@ -1,0 +1,27 @@
+notify-success:
+  stage: .post
+  script:
+    - sh utils/ci_notify.sh ✅
+  when: on_success
+  only:
+    - merge_requests
+    - branches
+    - /^v\d+\.\d+\.\d+$/
+  except:
+    - /^tests.*$/
+    - /^release.*$/
+  interruptible: true
+
+notify-failure:
+  stage: .post
+  script:
+    - sh utils/ci_notify.sh ❌
+  when: on_failure
+  only:
+    - merge_requests
+    - branches
+    - /^v\d+\.\d+\.\d+$/
+  except:
+    - /^tests.*$/
+    - /^release.*$/
+  interruptible: true
